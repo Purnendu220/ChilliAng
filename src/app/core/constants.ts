@@ -45,6 +45,7 @@ export class Constants {
   static seoActivityKeyWords = 'Seo-Activity-List';
   static metaTrainerList = 'trainerList';
   static metaGymList = 'gymList';
+  static connectionRefused: string;
 }
 
 

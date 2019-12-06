@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { LocalStorageService } from './core/service/local-storage.service';
+import { HeaderComponent } from './header/header.component';
+
 declare var $: any;
 
 @Component({
@@ -7,6 +11,12 @@ declare var $: any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  isLoggedIn:any;
+  @ViewChild('Appheader',{static: false}) header:HeaderComponent;
+
+  constructor(private http: HttpClient){
+
+  }
   ngAfterViewInit() {
     $('.hero-slider').slick({
       autoplay: true,
@@ -28,6 +38,24 @@ export class AppComponent {
 });
  
 }
+ngOnInit(){
+  this.isLoggedIn = LocalStorageService.getIsLoggedIn();
+ 
+}
+userLoggedIn(){
+  this.isLoggedIn = LocalStorageService.getIsLoggedIn();
+  console.log("Login")
 
+}
+userLoggedOut(){
+  this.isLoggedIn = LocalStorageService.getIsLoggedIn();
+  console.log("Logout")
+
+}
+
+userLoginRequest(){
+  this.header.openModal("#loginModal");
+
+}
   title = 'chiliApp';
 }
