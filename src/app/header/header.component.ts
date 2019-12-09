@@ -21,6 +21,8 @@ export class HeaderComponent implements OnInit {
   dealerOpNotify = "http://41.222.103.118:3333/dealer/dealerOpNotify";
   etopUp = "http://41.222.103.118:3333/dealer/eTopup";
   modifyPin = "http://41.222.103.118:3333/dealer/modifydPIN";
+  qryLastTransETOPUP = "http://41.222.103.118:3333/dealer/qryLastTransETOPUP";
+
   amount:any;
   agentPwd:any
   fromAgentNbr:any
@@ -31,8 +33,12 @@ export class HeaderComponent implements OnInit {
   msisdn:any;
   amountetopup:any;
   agentPwdEtopup:any;
-  @Output() mUserLoggedIn = new EventEmitter();
-  @Output() mUserLoggedOut = new EventEmitter(); 
+   @Output() mUserLoggedIn = new EventEmitter();
+   @Output() mUserLoggedOut = new EventEmitter(); 
+ 
+   agentPwdLastTransaction:any;
+   lastTransactionObj:any;
+ 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
@@ -211,6 +217,42 @@ eTopUpUser(){
   }
   
   $("#etopupModal").modal("hide");
+}
+
+
+getLastTransaction(){
+     if(this.agentPwdLastTransaction&&this.agentPwdLastTransaction+"".length>0){
+      const headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
+      let params = "?agentNbr="+this.agentPhone+"&agentPwd="+this.agentPwdLastTransaction;
+      this.http.get(this.qryLastTransETOPUP+params, { headers: headers})
+        .subscribe(data => {
+          let reaponse:any=data;
+          let responseData:any;
+          try{
+             responseData=JSON.parse(reaponse.data);
+            }
+          catch(e){
+            responseData=reaponse.data;
+          }
+          if(responseData&&responseData.errorcode&&responseData.errorcode!="0000"){
+          alert(responseData.errormsg)
+          }
+          else{
+            this.lastTransactionObj = responseData;
+            this.closeModal("#lastTransactionModal");
+            this.openModal("#lastTransactionDetailModal");
+
+          }
+      
+        },
+        error => {
+          alert(error.data)
+    
+        });
+     }else{
+       alert("Agent password is required");
+     }
+
 }
 openModal(id){
   $(id).modal("show");

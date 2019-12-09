@@ -15,7 +15,8 @@
                 </div>
                 <div class="col-lg-8 text-center text-lg-right">
                     <ul class="list-inline">
-                        <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="">Locate Retailer</a></li>
+                        <li *ngIf="!isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="">Locate Retailer</a></li>
+                        <li *ngIf="isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#lastTransactionModal" >Last Transaction</a></li>
                         <li *ngIf="isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#etopupModal" >E-Topup Retailer</a></li>
                         <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" >About Chili</a></li>
                         <li *ngIf="!isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#loginModal">login</a></li>
@@ -252,3 +253,74 @@
     </div>
 </div>
 <!--Etopup Modal -->
+
+
+  <!-- Last transaction Modal -->
+  <div class="modal fade" id="lastTransactionModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content rounded-0 border-0 p-4">
+            <div class="modal-header border-0">
+                <h3>Last Transaction</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="dealer">
+                    <form class="row">
+                        <div class="col-12">
+                            <input type="password" class="form-control mb-3" id="agentPwdLastTransaction" name="agentPwdLastTransaction" placeholder="MPIN" [(ngModel)]="agentPwdLastTransaction">
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary" (click)="getLastTransaction()">Get Transaction</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  <!-- Last transaction Modal -->
+
+
+  <!-- Last transaction Detail Modal -->
+  <div class="modal fade" id="lastTransactionDetailModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content rounded-0 border-0 p-4">
+            <div class="modal-header border-0">
+                <h3>Last Transaction</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="dealer">
+                    <form class="row">
+                        <div class="col-12">
+                            <h6  >Transaction Date</h6>
+                            <label  class="form-control" id="transactionDate" name="transactionDate">{{lastTransactionObj?.transDate}}</label>
+                        </div>
+                        <div class="col-12">
+                                <h6>User Amount Recharge</h6>
+                                <label  class="form-control" id="userAmountRecharge" name="userAmountRecharge">{{lastTransactionObj?.userAmountRecharge}}</label>
+                            </div>
+                            <div class="col-12">
+                                    <h6>MSISDN</h6>
+                                    <label  class="form-control" id="usermsisdn" name="usermsisdn">{{lastTransactionObj?.msisdn}}</label>
+                                </div>
+                                <div class="col-12">
+                                        <h6>Transaction ID</h6>
+                                        <label  class="form-control" id="transactionID" name="transactionID">{{lastTransactionObj?.transactionID}}</label>
+                                    </div>
+                                    <div class="col-12">
+                                            <h6>Agent Amount Deducted</h6>
+                                            <label  class="form-control" id="agentAmountDeduct" name="agentAmountDeduct">{{lastTransactionObj?.agentAmountDeduct}}</label>
+                                        </div>
+                       
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  <!-- Last transaction Detail Modal -->
