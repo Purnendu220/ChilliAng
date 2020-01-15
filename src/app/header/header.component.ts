@@ -22,7 +22,11 @@ export class HeaderComponent implements OnInit {
   etopUp = "http://41.222.103.118:3333/dealer/eTopup";
   modifyPin = "http://41.222.103.118:3333/dealer/modifydPIN";
   qryLastTransETOPUP = "http://41.222.103.118:3333/dealer/qryLastTransETOPUP";
+  uploadPics= "http://41.222.103.118:3333/dealer/uploads";
+  queryUserProfile ="http://41.222.103.118:3333/subscriber/queryUserProfileMTML2"
+  registerCustomer ="http://41.222.103.118:3333/dealer/customerRegisterBORequest"
 
+  
   amount:any;
   agentPwd:any
   fromAgentNbr:any
@@ -38,6 +42,20 @@ export class HeaderComponent implements OnInit {
  
    agentPwdLastTransaction:any;
    lastTransactionObj:any;
+
+   signupmsisdn:any;
+   signupName:any;
+   signupCertNo:any;
+   signupGender:any;
+   signupAddressLine1:any;
+   signupAddressLine2:any;
+   signupPic:any;
+
+   queryUserProfileMsisdn:any;
+   queryUserProfileIMSI:any;
+   queryUserProfilePswd:any;
+   queryUserProfileData:any;
+
  
   constructor(private http: HttpClient) { }
 
@@ -137,9 +155,121 @@ dealerBalanceTransfer(){
 
 }
 
+queryUserProfileMTML2(){
+  if(this.queryUserProfileMsisdn&&this.queryUserProfileMsisdn+"".length>0){
+    const headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
+    let params;
+    if(!this.queryUserProfileIMSI||this.queryUserProfileIMSI+"".length==0){
+      this.queryUserProfileIMSI="";
+
+    }
+    if(!this.queryUserProfilePswd||this.queryUserProfilePswd+"".length==0){
+      this.queryUserProfilePswd="";
+
+    }
+
+  params = "?msisdn="+this.queryUserProfileMsisdn+"&imsi="+this.queryUserProfileIMSI+"&userPwd="+this.queryUserProfilePswd;
+
+    this.http.get(this.queryUserProfile+params, { headers: headers})
+      .subscribe(data => {
+        let reaponse:any=data;
+        console.log(JSON.parse(reaponse.data));
+        let dataresponse = JSON.parse(reaponse.data);
+        if(dataresponse.errormsg){
+          alert(dataresponse.errormsg)
+        }else{
+         this.queryUserProfileData =  dataresponse;
+         this.closeModal("#queryUserProfileMTML2Modal");
+            this.openModal("#queryUserProfileMTML2ModalResponse");
+         
+        }
+      },
+      error => {
+        alert(error.data)
+        console.log( JSON.parse(error.data));
+  
+      });
+  }
+  else{
+    alert("Pleasee fill all required Feilds");
+  }
+
+
+
+}
+
 register(){
+   if(this.signupmsisdn&&this.signupmsisdn.length>0&&
+    this.signupName&&this.signupName.length>0&&
+    this.signupCertNo&&this.signupCertNo.length>0&&
+    this.signupGender&&this.signupGender.length>0&&
+    this.signupAddressLine1&&this.signupAddressLine1.length>0&&
+    this.signupAddressLine2&&this.signupAddressLine2.length>0&&
+    this.signupPic&&this.signupPic.length>0
+    )
+{
+  const headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
+  let request ={'msisdn':this.signupmsisdn,
+    'agentNbr':LocalStorageService.getUser().phone,
+    'customerName': this.signupName,
+    'certType':"1",
+    'certNo': this.signupCertNo,
+    'gender': this.signupGender,
+    'location':'Mauritius MTML',
+    'addressLine1':this.signupAddressLine1,
+    'addressLine2':this.signupAddressLine2,
+    'customerImagePath':this.signupPic,
+    'idPic':this.signupPic
+  }
+  return this.http.post(this.registerCustomer, request,{ headers: headers})
+  .subscribe(data => {
+    let reaponse:any=data;
+    console.log(JSON.parse(reaponse.data));
+    let dataresponse=JSON.parse(reaponse.data);
+    if(dataresponse.errormsg){
+      alert(dataresponse.errormsg);
+     } else{
+       alert("Registration successfull")
+     }
+  },
+  error => {
+    alert(error.data)
+    console.log( JSON.parse(error.data));
+
+  });
+
+
+}else{
+  alert('Please complete form before submit.')
+}
  // return this.http.post(localUrl,{});
 }
+fileSelected(event){
+  //const headers = new HttpHeaders({'Content-Type': 'multipart/form-data'});
+if(this.signupmsisdn&&this.signupmsisdn+"".length>0){
+  let formData: FormData = new FormData(); 
+  formData.append('msisdn', this.signupmsisdn); 
+  formData.append('files', event[0]); 
+  formData.append('files', event[0]); 
+
+  return this.http.post(this.uploadPics, formData)
+  .subscribe(data => {
+    debugger
+    let reaponse:any=data;
+    this.signupPic = reaponse.pic1
+    alert("success")
+  },
+  error => {
+    alert(error.data)
+    console.log( JSON.parse(error.data));
+
+  });
+}else{
+  alert("Please provoide msisdn before selecting image.")
+}
+
+
+   }
 
 pinmodification(){
   if(this.oldMpin&&this.oldMpin+"".length>0&&this.newMPin&&this.newMPin+"".length>0&&this.confirmNewMPin&&this.confirmNewMPin+"".length>0){
@@ -261,4 +391,8 @@ openModal(id){
 closeModal(id){
   $(id).modal("hide");
 }
+handleError(handleError: any) {
+  throw new Error("Method not implemented.");
 }
+}  
+

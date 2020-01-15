@@ -4,7 +4,7 @@
     <div class="top-header py-2 bg-white">
         <div class="container">
             <div class="row no-gutters">
-                <div class="col-lg-4 text-center text-lg-left">
+                <!-- <div class="col-lg-4 text-center text-lg-left">
                     <a class="text-color mr-3" href="callto:+443003030266"><strong>Email</strong> help@chili.com</a>
                     <ul class="list-inline d-inline">
                         <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-facebook"></i></a></li>
@@ -12,15 +12,16 @@
                         <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-linkedin"></i></a></li>
                         <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-instagram"></i></a></li>
                     </ul>
-                </div>
-                <div class="col-lg-8 text-center text-lg-right">
+                </div> -->
+                <div class="col-lg-12 text-center text-lg-right">
                     <ul class="list-inline">
                         <li *ngIf="!isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="">Locate Retailer</a></li>
-                        <li *ngIf="isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#lastTransactionModal" >Last Transaction</a></li>
+                        <li *ngIf="isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#lastTransactionModal">Last Transaction</a></li>
+                        <li *ngIf="isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#queryUserProfileMTML2Modal">Query Profile</a></li>
                         <li *ngIf="isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#etopupModal" >E-Topup Retailer</a></li>
-                        <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" >About Chili</a></li>
+                        <!-- <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" >About Chili</a></li> -->
                         <li *ngIf="!isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#loginModal">login</a></li>
-                        <li *ngIf="!isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#signupModal">register</a></li>
+                        <li *ngIf="isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#signupModal">register</a></li>
                         <li *ngIf="isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#pinModal">Pin Modification</a></li>
                         <li *ngIf="isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#dealerModal">Dealer Balance</a></li>
                         <li *ngIf="isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" (click)="logout()">Logout</a></li>
@@ -92,20 +93,36 @@
             <div class="modal-body">
                 <div class="login">
                     <form action="#" class="row">
-                        <div class="col-12">
-                            <input type="text" class="form-control mb-3" id="signupPhone" name="signupPhone" placeholder="Phone">
+                        <div class="col-6">
+                            <input type="text" class="form-control mb-3" id="signupPhone" name="signupmsisdn" placeholder="MSISDN" [(ngModel)]="signupmsisdn">
+                        </div>
+
+                        <div class="col-6">
+                            <input type="text" class="form-control mb-3" id="signupName" name="signupName" placeholder="Name" [(ngModel)]="signupName">
                         </div>
                         <div class="col-12">
-                            <input type="text" class="form-control mb-3" id="signupName" name="signupName" placeholder="Name">
+                            <input type="text" class="form-control mb-3" id="signupCertNo" name="signupCertNo" placeholder="Certificate No" [(ngModel)]="signupCertNo"> 
                         </div>
                         <div class="col-12">
-                            <input type="email" class="form-control mb-3" id="signupEmail" name="signupEmail" placeholder="Email">
+                            <select class="form-control mb-3" id="signupGender" name="signupGender" placeholder="Gender" [(ngModel)]="signupGender">
+                                <option value="none">Please Select Gender</option>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                              </select>
                         </div>
                         <div class="col-12">
-                            <input type="password" class="form-control mb-3" id="signupPassword" name="signupPassword" placeholder="Password">
+                            <input type="text" class="form-control mb-3" id="signupAddressLine1" name="signupAddressLine1" placeholder="Address Line 1" [(ngModel)]="signupAddressLine1">
                         </div>
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary" (click)="signup()">SIGN UP</button>
+                            <input type="text" class="form-control mb-3" id="signupAddressLine2" name="signupAddressLine2" placeholder="Address Line 2" [(ngModel)]="signupAddressLine2">
+                        </div>
+
+                        <div class="col-12">
+                            <input type="file" class="form-control mb-3" id="signupPic" name="signupPic" placeholder="Choose Pic" accept="image/*" (change)="fileSelected($event.target.files)">
+                        </div>
+
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary" (click)="register()">SIGN UP</button>
                         </div>
                     </form>
                 </div>
@@ -324,3 +341,158 @@
     </div>
 </div>
   <!-- Last transaction Detail Modal -->
+  <!-- QueryUserProfile Modal -->
+  <div class="modal fade" id="queryUserProfileMTML2ModalResponse" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content rounded-0 border-0 p-4">
+            <div class="modal-header border-0">
+                <h3>Query User Profile</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="dealer">
+                    <form class="row">
+                        <div class="col-4">
+                            <h6  >ICCID</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.ICCID}}</label>
+                        </div>
+                        <div class="col-4">
+                            <h6  >Billing Index</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.BillingCycleTypeIndex}}</label>
+                        </div>
+                        <div class="col-4">
+                            <h6  >Postpaid Flag</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.PostpaidFlag}}</label>
+                        </div>
+
+                        <div class="col-4">
+                            <h6  >Dis Stop Date</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.DisableStopDate}}</label>
+                        </div>
+                        <div class="col-4">
+                            <h6  >Block Reason</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.BlockReason}}</label>
+                        </div>
+                        <div class="col-4">
+                            <h6  >Last Pay Date</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.LastPaymentDate}}</label>
+                        </div>
+
+                        <div class="col-4">
+                            <h6  >CustType</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.CustomerType}}</label>
+                        </div>
+                        <div class="col-4">
+                            <h6  >Suspnd Stop Date</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.SuspendStopDate}}</label>
+                        </div>
+                        <div class="col-4">
+                            <h6  >B Index</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.BrandIndex}}</label>
+                        </div>
+                        
+                        <div class="col-4">
+                            <h6  >B Name</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.BrandName}}</label>
+                        </div>
+                        <div class="col-4">
+                            <h6  >DefLang</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.DefLang}}</label>
+                        </div>
+                        <div class="col-4">
+                            <h6  >State</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.State}}</label>
+                        </div>
+                        
+                        
+                        <div class="col-4">
+                            <h6  >IMSI</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.IMSI}}</label>
+                        </div>
+                        <div class="col-4">
+                            <h6  >L Pay Made</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.LastPaymentMade}}</label>
+                        </div>
+                        <div class="col-4">
+                            <h6  >creditLimit</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.creditLimit}}</label>
+                        </div>
+                        
+                        <div class="col-4">
+                            <h6  >Cust Name</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.CustomerName}}</label>
+                        </div>
+                        <div class="col-4">
+                            <h6  >Master Wallet</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.masterWallet}}</label>
+                        </div>
+                        <div class="col-4">
+                            <h6  >Active Stop Date</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.ActiveStopDate}}</label>
+                        </div>
+                        
+                        <div class="col-4">
+                            <h6  >StateSet</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.StateSet}}</label>
+                        </div>
+                        <div class="col-4">
+                            <h6  >S Stop Date</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.ServiceStopDate}}</label>
+                        </div>
+                        <div class="col-4">
+                            <h6  >Refill Err</h6>
+                            <label  class="form-control" id="iccid" name="iccid">{{queryUserProfileData?.RefillErrorTimes}}</label>
+                        </div>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  <!-- QueryUserProfile Modal -->
+
+    <!-- QueryUserProfile  Modal -->
+    <div class="modal fade" id="queryUserProfileMTML2Modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content rounded-0 border-0 p-4">
+                <div class="modal-header border-0">
+                    <h3>Query User Profile</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <div class="dealer">
+                        <form class="row">
+                            <div class="col-6">
+                                <input type="text" class="form-control mb-3" id="queryUserProfileMsisdn" name="queryUserProfileMsisdn" placeholder="MSISDN" [(ngModel)]="queryUserProfileMsisdn">
+                            </div>
+                            <div class="col-6">
+                                <input type="text" class="form-control mb-3" id="queryUserProfileIMSI" name="queryUserProfileIMSI" placeholder="IMSI" [(ngModel)]="queryUserProfileIMSI">
+                            </div>
+                            <div class="col-12">
+                                <input type="password" class="form-control mb-3" id="queryUserProfilePswd" name="queryUserProfilePswd" placeholder="Password" [(ngModel)]="queryUserProfilePswd">
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary" (click)="queryUserProfileMTML2()">Query User Profile</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <!-- QueryUserProfile Modal -->
