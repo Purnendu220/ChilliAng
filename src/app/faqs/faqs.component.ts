@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LocalStorageService } from '../core/service/local-storage.service';
 
 @Component({
   selector: 'app-faqs',
@@ -9,6 +10,8 @@ export class FaqsComponent implements OnInit {
 
   constructor() { }
   allfaq = [];
+  isLoggedIn:boolean;
+
   ngOnInit() {
    let obj1 = {"ques":"What is CHILI? ","ans":"CHILI is the brand name of Mobile Service from MTML"}
    let obj2 = {"ques":"Where can I buy CHILI Mobile? What are the documents required to purchase a Prepaid and Postpaid SIM Card? ","ans":"MTML has its Customer Care Centers / Shops and strong retail distribution network across the island, which sells CHILI SIM cards and recharge coupons.Documents required for Prepaid: National ID Card. Documents required for Post Paid: National ID Card & Proof of Address. "}
@@ -79,5 +82,14 @@ export class FaqsComponent implements OnInit {
 
    
   }
-
+  userLoggedIn(){
+    this.isLoggedIn = LocalStorageService.getIsLoggedIn();
+    console.log("Login")
+  
+  }
+  userLoggedOut(){
+    this.isLoggedIn = LocalStorageService.getIsLoggedIn();
+    console.log("Logout")
+  
+  }
 }

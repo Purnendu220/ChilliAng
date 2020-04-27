@@ -168,4 +168,15 @@ private eTopUpUser(){
 
     });  }
 
+    userLoggedIn(){
+      this.isLoggedIn = LocalStorageService.getIsLoggedIn();
+      console.log("Login")
+    
+    }
+    userLoggedOut(){
+      this.isLoggedIn = LocalStorageService.getIsLoggedIn();
+      console.log("Logout")
+    
+    }
+
 }

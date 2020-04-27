@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LocalStorageService } from '../core/service/local-storage.service';
 
 @Component({
   selector: 'app-locate-us',
@@ -12,6 +13,7 @@ export class LocateUsComponent implements OnInit {
   addressList=["Mosque Avenue ","A-26, Flacq Coeur de Ville, Avenue President Francois, Mitterrand, Central Flacq. ","10 GF, CSK Building, Sir Celli Court Antelme Street ","MTML Square, 63, Cybercity, Ebene ","2, Osman Avenue, Near Post office","10, Royal Road, Curepipe ","Royal Road ","Plaisance Shopping Village (J05)"];
   teleList=["5292 8060","5290 8060","5291 0060","5290 6060 ","5292 6060 ","5291 5060 ","5291 2244 ","5290 6040 "];
 
+  isLoggedIn:boolean;
 
   ngOnInit() {
  for(let i=0;i<this.nameList.length;i++){
@@ -20,5 +22,14 @@ export class LocateUsComponent implements OnInit {
   }
 
   }
-
+  userLoggedIn(){
+    this.isLoggedIn = LocalStorageService.getIsLoggedIn();
+    console.log("Login")
+  
+  }
+  userLoggedOut(){
+    this.isLoggedIn = LocalStorageService.getIsLoggedIn();
+    console.log("Logout")
+  
+  }
 }
