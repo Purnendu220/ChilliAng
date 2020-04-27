@@ -1,0 +1,37 @@
+<app-header #Appheader  (mUserLoggedIn)="userLoggedIn()" (mUserLoggedOut)="userLoggedOut()" ></app-header>
+
+
+ <!-- hero slider -->
+ <section class="hero-section overlay" >
+    <div class="container">
+        <div class="card" style="width:80%; margin-left: auto;margin-right: auto;">
+            <div class="card-body">
+               <div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>CCC Name</th>
+                          <th>Address</th>
+                          <th>Tel No</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let store of storeList;let i = index">
+                          <td>{{store.name}}</td>
+                          <td>{{store.address}}</td>
+                          <td class="c_p">{{store.tele}}</td>
+                        </tr>
+                        
+                      </tbody>
+                    </table>
+
+
+                  </div>
+             
+            </div>
+          </div>
+    </div>
+  </section>
+  <!-- /hero slider -->
+<app-footer></app-footer>
+

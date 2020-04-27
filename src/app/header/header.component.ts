@@ -16,6 +16,8 @@ export class HeaderComponent implements OnInit {
   phone:any;
   password:any;
   agentPhone:any;
+  loginUrlSubscriber ="http://41.222.103.118:3333/subscriber/queryUserProfileMTML2"
+
   loginUrl:any = "http://41.222.103.118:3333/dealer/authDealerNumber";
   dealerBalTransfer="http://41.222.103.118:3333/dealer/dealerBalTransfer";
   dealerOpNotify = "http://41.222.103.118:3333/dealer/dealerOpNotify";
@@ -25,7 +27,10 @@ export class HeaderComponent implements OnInit {
   uploadPics= "http://41.222.103.118:3333/dealer/uploads";
   queryUserProfile ="http://41.222.103.118:3333/subscriber/queryUserProfileMTML2"
   registerCustomer ="http://41.222.103.118:3333/dealer/customerRegisterBORequest"
+  queryIndividualPackageUrl ="http://172.27.89.209:4545/insmp/api/subscriber/packagequery/";
 
+  userType:any = -1;//for dealer 1 for subscriber 2
+  userData:any;
   
   amount:any;
   agentPwd:any
@@ -64,12 +69,25 @@ export class HeaderComponent implements OnInit {
     if(this.isLoggedIn){
       this.agentPhone=LocalStorageService.getUser().phone;
       this.fromAgentNbr=LocalStorageService.getUser().phone;
+      this.userType = LocalStorageService.getUserTypeString();
+      if(this.userType==2){
+        this.userData = LocalStorageService.getUserData();
+      }
 
     }
+
+  }
+  selectUserType(type){
+    this.userType = type;
   }
 login(){
-  if(this.phone&&this.password&&this.phone.length>0 && this.password.length>0){
-   this.loginApi(this.phone,this.password);
+  
+  if(this.userType>-1&&this.phone&&this.password&&this.phone.length>0 && this.password.length>0){
+    if(this.userType == 1){
+      this.loginApi(this.phone,this.password);
+    }else{
+      this.loginApiSubscriber(this.phone,this.password);
+    }
   }else{
     alert("Require Fields are missing")
   }
@@ -100,11 +118,12 @@ loginApi(agentNumber,mPin){
       }
       else{
         LocalStorageService.setIsLoggedIn(true);
-        LocalStorageService.setUser({name:agentNumber,phone:agentNumber,email:agentNumber+"@yopmail.com"});
+        LocalStorageService.setUser({name:agentNumber,phone:agentNumber,email:agentNumber+"@yopmail.com",userType:this.userType});
+        LocalStorageService.setUserType(this.userType)
         this.isLoggedIn = LocalStorageService.getIsLoggedIn();
         this.agentPhone=LocalStorageService.getUser().phone;
         this.fromAgentNbr=LocalStorageService.getUser().phone;
-        this.mUserLoggedIn.emit({name:agentNumber,phone:agentNumber,email:agentNumber+"@yopmail.com"});
+        this.mUserLoggedIn.emit({name:agentNumber,phone:agentNumber,email:agentNumber+"@yopmail.com",userType:this.userType});
         $("#loginModal").modal("hide");
       }
       console.log(JSON.parse(reaponse.data));
@@ -118,6 +137,48 @@ loginApi(agentNumber,mPin){
 
   //return this.http.get(this.loginUrl);
 }
+loginApiSubscriber(agentNumber,mPin){
+  const headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
+  let params="?msisdn="+agentNumber+"&userPwd="+mPin+"&imsi=";
+  this.http.get(this.loginUrlSubscriber+params, { headers: headers})
+    .subscribe(data => {
+      debugger
+      let reaponse:any=data;
+      let errorMessage;
+      try{
+        errorMessage = JSON.parse(reaponse.data).errormsg;
+      }catch(e){
+}
+      if(errorMessage&&errorMessage.length>0){
+       alert(errorMessage)
+       return;
+      }
+      else{
+        LocalStorageService.setIsLoggedIn(true);
+        LocalStorageService.setUser({name:agentNumber,phone:agentNumber,email:agentNumber+"@yopmail.com",userType:this.userType});
+        LocalStorageService.setUserType(this.userType)
+        LocalStorageService.setUserData(reaponse.data)
+        this.isLoggedIn = LocalStorageService.getIsLoggedIn();
+        this.agentPhone=LocalStorageService.getUser().phone;
+        this.fromAgentNbr=LocalStorageService.getUser().phone;
+        this.mUserLoggedIn.emit({name:agentNumber,phone:agentNumber,email:agentNumber+"@yopmail.com",userType:this.userType});
+        this.userData = reaponse.data;
+        $("#loginModal").modal("hide");
+      }
+      console.log(JSON.parse(reaponse.data));
+    },
+    error => {
+      debugger
+
+      alert(error.data)
+      console.log( JSON.parse(error.data));
+
+    });
+
+
+  //return this.http.get(this.loginUrl);
+}
+
 
 dealerBalanceTransfer(){
   if(this.agentPwd&&this.agentPwd+"".length>0&&this.amount&&this.amount+"".length>0&&this.toAgentNbr&&this.toAgentNbr+"".length>0){
@@ -394,5 +455,88 @@ closeModal(id){
 handleError(handleError: any) {
   throw new Error("Method not implemented.");
 }
+queryIndividualPackage(msisdn){
+
+  const headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
+      this.http.get(this.queryIndividualPackageUrl+this.agentPhone, { headers: headers})
+        .subscribe(data => {
+          let reaponse:any=data;
+          let responseData:any;
+          try{
+             responseData=this.getIndividualResponse(JSON.parse(reaponse.data));
+            
+            }
+          catch(e){
+            responseData=reaponse.data;
+          }
+         alert(responseData);
+      
+        },
+        error => {
+          alert(error.data)
+    
+        });
+}
+
+getIndividualResponse(responseStr){
+  try{
+
+  if(responseStr!=null && responseStr.indexOf("SUCCESS")>0 || responseStr.indexOf("RETN=0000")>0) {
+    let resultStr = responseStr.substring(responseStr.indexOf("RESULT="), responseStr.length());
+    responseStr = resultStr.substring(resultStr.indexOf("RESULT=")+7, resultStr.indexOf("\""));
+    let plans = responseStr.split("&&");
+    //SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    let Fn_EffDate_Str = "";
+    for (let i = 0; i < plans.length; i++) {
+      let str = plans[i];
+      let items = str.split("\\|");
+      let plan_name = "";
+      let exp_date = "";
+         if(items.length>=3 && items[3]!=null && items[3].length()>1)
+           plan_name = items[3];
+         if(items.length>=5 && items[5]!=null && items[5].length()>1)
+           exp_date= items[5];
+         let position = i+1;
+         if(exp_date!=null)
+          // exp_date = formatDatewithoutTime2(exp_date);
+         Fn_EffDate_Str = Fn_EffDate_Str+""+plan_name+" expires on "+exp_date+", ";
+    }
+    
+    let is_areStr = "are";
+    if(plans.length == 1)
+    {
+      is_areStr= "is";
+    }
+    
+    if(Fn_EffDate_Str!=null)
+      Fn_EffDate_Str=Fn_EffDate_Str.trim();
+    if(Fn_EffDate_Str.endsWith(",")) {
+      Fn_EffDate_Str = Fn_EffDate_Str.substring(0,Fn_EffDate_Str.lastIndexOf(","));
+    }
+    
+    
+    if(is_areStr=="are")
+      responseStr= "Your existing packages "+is_areStr+" "+Fn_EffDate_Str+".";
+    else
+      responseStr= "Your existing packages "+is_areStr+" "+Fn_EffDate_Str+".";
+    
+    
+    if(responseStr!=null && responseStr.length()>159)
+    responseStr= Fn_EffDate_Str+".";
+      
+    
+  } else  {
+    responseStr = "Dear Customer, Sorry! your existing package deatils are not available.Thank you.";
+  }
+}
+catch (e) {
+  // TODO: handle exception
+  responseStr = "Dear Customer, Sorry! your existing package deatils are not available.Thank you.";
+}
+return responseStr;
+
+}
+
+
 }  
 

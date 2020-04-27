@@ -1,0 +1,40 @@
+<app-header #Appheader  (mUserLoggedIn)="userLoggedIn()" (mUserLoggedOut)="userLoggedOut()" ></app-header>
+
+
+ <!-- hero slider -->
+ <section class="hero-section overlay" >
+    <div class="container">
+        <div class="card" style="width:80%; margin-left: auto;margin-right: auto;">
+            <div class="card-body">
+              <p-accordion>
+                <p-accordionTab *ngFor="let package of allPackageType;let i = index" header="{{package.name}}" [selected]="i==0">
+                  <div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Package Name</th>
+                          <th>Sub Package Name</th>
+                          <th>Purchase</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let subpackage of package.packList;let i = index">
+                          <td>{{subpackage.name}}</td>
+                          <td>{{subpackage.packageSubType.name}}</td>
+                          <td class="c_p" (click)="addindividualPack(subpackage)">Buy</td>
+                        </tr>
+                        
+                      </tbody>
+                    </table>
+
+
+                  </div>
+                </p-accordionTab>
+               </p-accordion>
+            </div>
+          </div>
+    </div>
+  </section>
+  <!-- /hero slider -->
+<app-footer></app-footer>
+

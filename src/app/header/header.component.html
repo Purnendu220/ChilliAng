@@ -4,26 +4,25 @@
     <div class="top-header py-2 bg-white">
         <div class="container">
             <div class="row no-gutters">
-                <!-- <div class="col-lg-4 text-center text-lg-left">
-                    <a class="text-color mr-3" href="callto:+443003030266"><strong>Email</strong> help@chili.com</a>
-                    <ul class="list-inline d-inline">
-                        <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-facebook"></i></a></li>
-                        <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-twitter-alt"></i></a></li>
-                        <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-linkedin"></i></a></li>
-                        <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-instagram"></i></a></li>
-                    </ul>
-                </div> -->
-                <div class="col-lg-12 text-center text-lg-right">
+                <div class="col-lg-4 text-center text-lg-left">
                     <ul class="list-inline">
-                        <li *ngIf="!isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="">Locate Retailer</a></li>
-                        <li *ngIf="isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#lastTransactionModal">Last Transaction</a></li>
-                        <li *ngIf="isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#queryUserProfileMTML2Modal">Query Profile</a></li>
-                        <li *ngIf="isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#etopupModal" >E-Topup Retailer</a></li>
+                        <li *ngIf="isLoggedIn && userType==2" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block c_p" (click)="queryIndividualPackage('776')" >Welcome {{userData.CustomerName}}</a></li>
+                        <li *ngIf="isLoggedIn && userType==2" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block c_p" (click)="queryIndividualPackage('6787687')" >Account Bal: {{userData.masterWallet}}</a></li>
+                        <li *ngIf="isLoggedIn && userType==2" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" [routerLink] = "'/accountDetail'" >Account Detail</a></li>
+
+                    </ul>
+                </div>
+                <div class="col-lg-8 text-center text-lg-right">
+                    <ul class="list-inline">
+                        <li *ngIf="!isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block c_p" [routerLink] = "'/locateus'">Locate Retailer</a></li>
+                        <li *ngIf="isLoggedIn && userType==1" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#lastTransactionModal">Last Transaction</a></li>
+                        <li *ngIf="isLoggedIn && userType==1" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#queryUserProfileMTML2Modal">Query Profile</a></li>
+                        <li *ngIf="isLoggedIn && userType==1" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#etopupModal" >E-Topup Retailer</a></li>
                         <!-- <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" >About Chili</a></li> -->
                         <li *ngIf="!isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#loginModal">login</a></li>
-                        <li *ngIf="isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#signupModal">register</a></li>
-                        <li *ngIf="isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#pinModal">Pin Modification</a></li>
-                        <li *ngIf="isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#dealerModal">Dealer Balance</a></li>
+                        <li *ngIf="isLoggedIn && userType==1" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#signupModal">register</a></li>
+                        <li *ngIf="isLoggedIn && userType==1" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#pinModal">Pin Modification</a></li>
+                        <li *ngIf="isLoggedIn && userType==1" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#dealerModal">Dealer Balance</a></li>
                         <li *ngIf="isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" (click)="logout()">Logout</a></li>
 
 
@@ -37,7 +36,7 @@
     <div class="navigation w-100">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light p-0">
-                <a class="navbar-brand" href=""><img src="assets/images/logo2.png" alt="logo"></a>
+                <a class="navbar-brand c_p" [routerLink] = "'/'"><img src="assets/images/logo2.png" alt="logo"></a>
                 <button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -45,32 +44,30 @@
                 <div class="collapse navbar-collapse" id="navigation">
                     <ul class="navbar-nav ml-auto text-center">
                         <li class="nav-item active">
-                            <a class="nav-link" href="">Mobile</a>
+                            <a class="nav-link c_p" [routerLink] = "'/packages'">Mobile Plans</a>
                         </li>
                         <li class="nav-item @@about">
-                            <a class="nav-link" href="">Internet</a>
+                            <a class="nav-link c_p" [routerLink] = "'/packages'">Data Plans</a>
                         </li>
                         <li class="nav-item @@courses">
-                            <a class="nav-link" href="">International Calling</a>
+                            <a class="nav-link c_p" [routerLink] = "'/packages'">Sms Plans</a>
                         </li>
 
-                        <li class="nav-item @@blog">
-                            <a class="nav-link" href="">Business</a>
+                        <li  *ngIf="isLoggedIn && userType==2" class="nav-item @@blog c_p" [routerLink] = "'/quickrecharge'">
+                            <a class="nav-link c_p" >Quick Recharge</a>
                         </li>
                         <li class="nav-item dropdown view">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Products
-          </a>
+                                Products
+                            </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="">Internet</a>
-                                <a class="dropdown-item" href="">CDMA</a>
-                                <a class="dropdown-item" href="">GSM</a>
-                                <a class="dropdown-item" href="">EVDO Dongle</a>
-
+                                <a class="dropdown-item" [routerLink] = "'/packages'">Data Plans</a>
+                                <a class="dropdown-item" [routerLink] = "'/packages'">Mobile Plans</a>
+                                <a class="dropdown-item" [routerLink] = "'/packages'">SMS Plans</a>
                             </div>
                         </li>
                         <li class="nav-item @@contact">
-                            <a class="nav-link" href="">Support</a>
+                            <a class="nav-link" [routerLink] = "'/support'">Support</a>
                         </li>
                     </ul>
                 </div>
@@ -144,6 +141,13 @@
           </div>
           <div class="modal-body">
               <form action="#" class="row">
+                <div class="col-12">
+                    <select class="form-control mb-3" id="signinUserType" name="signinUserType" placeholder="User Type" [(ngModel)]="userType">
+                        <option value="-1">Please Select User Type</option>
+                        <option value="2">Subscriber</option>
+                        <option value="1">Dealer</option>
+                      </select>
+                </div>  
                   <div class="col-12">
                       <input type="text" class="form-control mb-3" id="loginPhone" name="loginPhone" placeholder="Phone" [(ngModel)]="phone"> 
                   </div>
@@ -496,3 +500,28 @@
         </div>
     </div>
       <!-- QueryUserProfile Modal -->
+
+        <!-- Last transaction Modal -->
+  <div class="modal fade" id="queryIndividualProfile" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content rounded-0 border-0 p-4">
+            <div class="modal-header border-0">
+                <h3>Last Transaction</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="dealer">
+                    <form class="row">
+                        <div class="col-12">
+                            <input type="text" class="form-control mb-3"  disabled>
+                        </div>
+                       
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  <!-- Last transaction Modal -->

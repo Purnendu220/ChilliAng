@@ -28,6 +28,7 @@ export class Constants {
   static countryList="CountryList";
   static authToken="Pro-Auth-Token";
   static userAgent="userAgent";
+  static userData="user_data";
 
   static userAgentType="web";
 

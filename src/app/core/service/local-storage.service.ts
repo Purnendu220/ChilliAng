@@ -20,6 +20,13 @@ export class LocalStorageService {
     localStorage.setItem(Constants.userDataKey, JSON.stringify(user));
   }
 
+  static setUserData(userdata: any): void{
+    localStorage.setItem(Constants.userData,JSON.stringify(userdata))
+  }
+
+  static getUserData(): any {
+    return JSON.parse(localStorage.getItem(Constants.userData)) ;
+ }
   static getUser(): any {
      return JSON.parse(localStorage.getItem(Constants.userDataKey)) ;
   }
