@@ -35,14 +35,14 @@ export class QuickRechargeComponent implements OnInit {
 
     }
   }
-private eTopUpUser(){
+ eTopUpUser(){
   if(this.rechargeType==1){
     this.callVoucherApi(this.msisdn,this.vouchercode);
    }if(this.rechargeType==2){
      this.callServiceApi(this.servicenumber,this.amount);
   }
 }
-  private callVoucherApi(msisdn,voucherCode) {
+   callVoucherApi(msisdn,voucherCode) {
     debugger
     if(msisdn&&(msisdn+"").length>0&&voucherCode&&(voucherCode+"").length>0){
       let url = this.apiVoucherCodeRecharge+msisdn+"/"+this.agentPhone+"/"+voucherCode;
@@ -72,7 +72,7 @@ private eTopUpUser(){
 
 
   }
-  private callServiceApi(servicenumber,amount) {
+   callServiceApi(servicenumber,amount) {
     if(servicenumber&&(servicenumber+"").length>0&&amount&&(amount+"").length>0){
       let urlOne = this.apiServiceNumberRecharge.replace("xx-xx", servicenumber);
       let url = urlOne.replace("aa-aa", amount);
