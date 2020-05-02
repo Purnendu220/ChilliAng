@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "chiliapp-cddd2": {
+      "hosting": {
+        "chiliApp": [
+          "chiliapp-cddd2"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "chiliapp-cddd2"
+  }
+}

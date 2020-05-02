@@ -15,8 +15,9 @@ export class PackagesComponent implements OnInit {
   userData:any;
   getCorePackagesApi = "http://41.222.103.118:3333/package/corePackageAll"
   headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
+
   allPackageType =[];
-  addIndividualPackage = "http://172.27.89.209:4545/subscriber/addIndividualPackage/";
+  addIndividualPackage = "http://41.222.103.118:3333/subscriber/addIndividualPackage";
 
 
 
@@ -100,14 +101,17 @@ export class PackagesComponent implements OnInit {
   }
 }
 public addindividualPack(data){
-  if(this.isLoggedIn){
-    let obj =  {"msisdn":this.agentPhone,"priceNum":data.id}
-    this.http.post(this.addIndividualPackage, obj,{ headers: this.headers})
+  this.headers.append('Access-Control-Allow-Origin', '*');
+
+  if(this.isLoggedIn&&this.userType==2){
+    //let obj =  {"msisdn":"23059511002","priceNum":data.id}
+    this.http.get(this.addIndividualPackage+"?msisdn="+"23059511002"+"&priceNum="+data.id,{ headers: this.headers})
       .subscribe(data => {
+        debugger
         let reaponse:any=data;
         let result;
         try{
-          result= this.getResponseString(JSON.stringify(reaponse.data))
+          result= this.getResponseString(reaponse);
           console.log(result);
         }catch(e){
           result="Service is not available, Please try again later.";
@@ -120,7 +124,7 @@ public addindividualPack(data){
   
       });
   }else{
-    alert("Please login to buy")
+    alert("Please login as subscriber to buy")
     }
 
  

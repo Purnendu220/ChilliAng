@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   isLoggedIn:boolean;
   phone:any;
   password:any;
-  agentPhone:any;
+  agentPhone:any="23059511002";
   loginUrlSubscriber ="http://41.222.103.118:3333/subscriber/queryUserProfileMTML2"
 
   loginUrl:any = "http://41.222.103.118:3333/dealer/authDealerNumber";
@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
   uploadPics= "http://41.222.103.118:3333/dealer/uploads";
   queryUserProfile ="http://41.222.103.118:3333/subscriber/queryUserProfileMTML2"
   registerCustomer ="http://41.222.103.118:3333/dealer/customerRegisterBORequest"
-  queryIndividualPackageUrl ="http://172.27.89.209:4545/insmp/api/subscriber/packagequery/";
+  queryIndividualPackageUrl ="http://41.222.103.118:3333/subscriber/queryIndividualPackage";
 
   userType:any = -1;//for dealer 1 for subscriber 2
   userData:any;
@@ -75,6 +75,7 @@ export class HeaderComponent implements OnInit {
       }
 
     }
+    this.queryIndividualPackage(this.agentPhone);
 
   }
   selectUserType(type){
@@ -458,12 +459,15 @@ handleError(handleError: any) {
 queryIndividualPackage(msisdn){
 
   const headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
-      this.http.get(this.queryIndividualPackageUrl+this.agentPhone, { headers: headers})
+  headers.append('Access-Control-Allow-Origin', '*');
+  
+      this.http.get(this.queryIndividualPackageUrl+"?msisdn="+this.agentPhone, { headers: headers})
         .subscribe(data => {
+          debugger
           let reaponse:any=data;
           let responseData:any;
           try{
-             responseData=this.getIndividualResponse(JSON.parse(reaponse.data));
+             responseData=this.getIndividualResponse(reaponse);
             
             }
           catch(e){
@@ -473,6 +477,7 @@ queryIndividualPackage(msisdn){
       
         },
         error => {
+          debugger
           alert(error.data)
     
         });
