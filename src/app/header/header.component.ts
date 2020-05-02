@@ -75,7 +75,6 @@ export class HeaderComponent implements OnInit {
       }
 
     }
-    this.queryIndividualPackage(this.agentPhone);
 
   }
   selectUserType(type){
