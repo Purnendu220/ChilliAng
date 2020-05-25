@@ -4,43 +4,14 @@
  <section class="hero-section overlay bg-cover" data-background="assets/images/banner/prepaid1.jpg">
   <div class="container">
       <div class="hero-slider">
-          <!-- slider item -->
-          <div class="hero-slider-item">
-              <div class="row">
-                  <div class="col-md-8">
-                      <h1 class="text-white" data-animation-out="fadeOutRight" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInLeft" data-delay-in=".1">Your Prepaid Sim Delivered</h1>
-                      <p class="text-muted mb-4" data-animation-out="fadeOutRight" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInLeft" data-delay-in=".4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exer</p>
-                      <a *ngIf="!isLoggedIn" (click)="userLoginRequest()"  class="btn btn-primary" data-animation-out="fadeOutRight" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInLeft" data-delay-in=".7">Login Now</a>
-                  </div>
-              </div>
-          </div>
-          <!-- slider item -->
-          <div class="hero-slider-item">
-              <div class="row">
-                  <div class="col-md-8">
-                      <h1 class="text-white" data-animation-out="fadeOutUp" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInDown" data-delay-in=".1">Unlimited means truly Unlimited</h1>
-                      <p class="text-muted mb-4" data-animation-out="fadeOutUp" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInDown" data-delay-in=".4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exer</p>
-                      <a *ngIf="!isLoggedIn" (click)="userLoginRequest()"  class="btn btn-primary" data-animation-out="fadeOutUp" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInDown" data-delay-in=".7">Login now</a>
-                  </div>
-              </div>
-          </div>
-          <!-- slider item -->
-          <div class="hero-slider-item">
-              <div class="row">
-                  <div class="col-md-8">
-                      <h1 class="text-white" data-animation-out="fadeOutDown" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">You get connected to world is our mission</h1>
-                      <p class="text-muted mb-4" data-animation-out="fadeOutDown" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exer</p>
-                      <a *ngIf="!isLoggedIn" (click)="userLoginRequest()"  class="btn btn-primary" data-animation-out="fadeOutDown" data-delay-out="5" data-duration-in=".3" data-animation-in="zoomIn" data-delay-in=".7">Login now</a>
-                  </div>
-              </div>
-          </div>
+       
       </div>
   </div>
 </section>
 <!-- /hero slider -->
 
   <!-- banner-feature -->
-  <section class="bg-gray">
+  <section class="bg-gray" hidden>
     <div class="container-fluid p-0">
         <div class="row no-gutters">
             <div class="col-xl-4 col-lg-5 align-self-end">
@@ -80,10 +51,11 @@
         <div class="row align-items-center">
             <div class="col-md-6 order-2 order-md-1">
                 <h2 class="section-title">About Chili</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat </p>
-                <p>cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem</p>
-                <a href="about.html" class="btn btn-primary-outline">Learn more</a>
+                <p>MTML launched ‘CHiLi’ GSM services in Mauritius, in November 2011. Using the latest technology,  CHiLi offers greater choice for Voice, Data (3G & LTE ) at affordable prices to the customers.</p>
+                <p>MTML has heavily invested on CHiLi network and the equipment are supplied by leading Telecom equipment manufacturers around the world. The advanced technology is very environment friendly and allows reduction in electricity consumption of approx. 60% compared to traditional equipment.</p>
+                <p>CHiLi- brand & service is designed around the needs of the customer. The philosophy is to provide Technology that empowers the individual, at affordable costs to the People, and delivered in a way which is fun and caring to suit the Lifestyle of the customers. The CHiLi motto…”The coolest you’ll get”.</p>
+                <p>CHiLi offers the most attractive Tariff in the market, on an average around 60% economical than the competitors with the added advantage of also having lower International Call rates. CHiLi is the first & only network providing Incoming Call Bonus, where the customer get paid for receiving calls from other networks.</p>
+                <a href="about.html" class="btn btn-primary-outline" hidden>Learn more </a>
             </div>
             <div class="col-md-6 order-1 order-md-2 mb-4 mb-md-0">
                 <img class="img-fluid w-100" src="assets/images/about/about-us4.jpg" alt="about image">
@@ -93,7 +65,7 @@
 </section>
 <!-- /about us -->
 <!-- courses -->
-<section class="section-sm">
+<section class="section-sm" hidden>
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -175,7 +147,7 @@
 </section>
 <!-- /courses -->
  <!-- cta -->
- <section class="section bg-primary">
+ <section class="section bg-primary" hidden>
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
@@ -189,7 +161,7 @@
 <!-- /cta -->
 
   <!-- success story -->
-  <section class="section bg-cover" data-background="assets/images/backgrounds/success-story.jpg">
+  <section class="section bg-cover" data-background="assets/images/backgrounds/success-story.jpg" hidden>
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-sm-4 position-relative success-video">
