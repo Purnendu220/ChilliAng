@@ -9,6 +9,7 @@
                         <li *ngIf="isLoggedIn && userType==2" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block c_p" (click)="queryIndividualPackage('776')" >Welcome {{userData.CustomerName}}</a></li>
                         <li *ngIf="isLoggedIn && userType==2" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block c_p" (click)="queryIndividualPackage('6787687')" >Account Bal: {{userData.masterWallet}}</a></li>
                         <li *ngIf="isLoggedIn && userType==2" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" [routerLink] = "'/accountDetail'" >Account Detail</a></li>
+                        <li *ngIf="isLoggedIn && userType==2" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" (click)="openMpinModal()" >Set Mpin</a></li>
 
                     </ul>
                 </div>
@@ -18,8 +19,10 @@
                         <li *ngIf="isLoggedIn && userType==1" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#lastTransactionModal">Last Transaction</a></li>
                         <li *ngIf="isLoggedIn && userType==1" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#queryUserProfileMTML2Modal">Query Profile</a></li>
                         <li *ngIf="isLoggedIn && userType==1" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#etopupModal" >E-Topup Retailer</a></li>
+
+                        
                         <!-- <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" >About Chili</a></li> -->
-                        <li *ngIf="!isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#loginModal">login</a></li>
+                        <li *ngIf="!isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#loginModal" >login</a></li>
                         <li *ngIf="isLoggedIn && userType==1" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#signupModal">register</a></li>
                         <li *ngIf="isLoggedIn && userType==1" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#pinModal">Pin Modification</a></li>
                         <li *ngIf="isLoggedIn && userType==1" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#dealerModal">Dealer Balance</a></li>
@@ -131,41 +134,105 @@
 
 <!--Login Modal -->
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content rounded-0 border-0 p-4">
-          <div class="modal-header border-0">
-              <h3>Login</h3>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-          </button>
-          </div>
-          <div class="modal-body">
-              <form action="#" class="row">
-                <div class="col-12">
-                    <select class="form-control mb-3" id="signinUserType" name="signinUserType" placeholder="User Type" [(ngModel)]="userType">
-                        <option value="-1">Please Select User Type</option>
-                        <option value="2">Subscriber</option>
-                        <option value="1">Dealer</option>
-                      </select>
-                </div>  
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content rounded-0 border-0 p-4">
+            <div class="modal-header border-0">
+                <h3>Login</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form action="#" class="row">
                   <div class="col-12">
-                      <input type="text" class="form-control mb-3" id="loginPhone" name="loginPhone" placeholder="Phone" [(ngModel)]="phone"> 
-                  </div>
-                  <div class="col-12">
-                      <input type="text" class="form-control mb-3" id="loginName" name="loginName" placeholder="Name" hidden>
-                  </div>
-                  <div class="col-12">
-                      <input type="password" class="form-control mb-3" id="loginPassword" name="loginPassword" placeholder="Password" [(ngModel)]="password">
-                  </div>
-                  <div class="col-12">
-                      <button type="submit" class="btn btn-primary" (click)="login()">LOGIN</button>
-                  </div>
-              </form>
-          </div>
-      </div>
+                      <select class="form-control mb-3" id="signinUserType" name="signinUserType" placeholder="User Type" [(ngModel)]="userType">
+                          <option value="-1">Please Select User Type</option>
+                          <option value="2">Subscriber</option>
+                          <option value="1">Dealer</option>
+                        </select>
+                  </div>  
+                    <div class="col-12">
+                        <input type="text" class="form-control mb-3" id="loginPhone" name="loginPhone" placeholder="Phone" [(ngModel)]="phone"> 
+                    </div>
+                    <div class="col-12">
+                        <input type="text" class="form-control mb-3" id="loginName" name="loginName" placeholder="Name" hidden>
+                    </div>
+                    <div class="col-12">
+                        <input type="password" class="form-control mb-3" id="loginPassword" name="loginPassword" placeholder="Password" [(ngModel)]="password">
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary" (click)="login()">LOGIN</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
   </div>
-</div>
 <!--Login Modal-->
+
+<!--Mpin Modal -->
+<div class="modal fade" id="setMpinModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content rounded-0 border-0 p-4">
+            <div class="modal-header border-0">
+                <h3>Set MPIN</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form action="#" class="row">
+                  
+                  <div class="col-12" *ngIf="activeLoginStep==1" id="step1">
+                     
+                   <div class="col-12">
+                          <input type="text" class="form-control mb-3" id="loginPhone" name="loginPhone" placeholder="Phone" [(ngModel)]="phone"> 
+                      </div>
+  
+                      <div class="col-12">
+                          <button type="submit" class="btn btn-primary" (click)="proceedToVerifymPin()">PROCEED</button>
+                      </div>
+                  </div> 
+                  <div class="col-12" *ngIf="activeLoginStep==2" id="step2">
+                      <div class="col-12">
+                          <input type="password" class="form-control mb-3" id="loginPassword" name="loginPassword" placeholder="MPIN" [(ngModel)]="password">
+                      </div>
+  
+                      <div class="col-12">
+                          <button type="submit" class="btn btn-primary" (click)="verifyMpin()">LOGIN</button>
+                      </div>
+                  </div> 
+                  <div class="col-12" *ngIf="activeLoginStep==3" id="step3">
+                      <div class="col-12">
+                          <input type="password" class="form-control mb-3" id="loginOtp" name="loginOtp" placeholder="OTP" [(ngModel)]="otp">
+                      </div>
+  
+                      <div class="col-12">
+                          <button type="submit" class="btn btn-primary" (click)="verifyOtp()">Verify OTP</button>
+                      </div>
+                  </div> 
+                  <div class="col-12" *ngIf="activeLoginStep==4" id="step4">
+                      <div class="col-12">
+                          <input type="password" class="form-control mb-3" id="loginmpin" name="loginmpin" placeholder="Mpin" [(ngModel)]="mpin">
+                      </div>
+  
+                      <div class="col-12">
+                          <button type="submit" class="btn btn-primary" (click)="setMpin()">SET MPIN</button>
+                      </div>
+                  </div> 
+                    
+                    <div class="col-12">
+                        <input type="text" class="form-control mb-3" id="loginName" name="loginName" placeholder="Name" hidden>
+                    </div>
+                    
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+  
+  <!-- Mpin Modal-->
 
   <!-- Pin Modal -->
   <div class="modal fade" id="pinModal" tabindex="-1" role="dialog" aria-hidden="true">

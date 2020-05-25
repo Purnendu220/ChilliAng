@@ -3,6 +3,7 @@ import { LocalStorageService } from '../core/service/local-storage.service';
 import { Constants } from '../core/constants';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 declare var $: any;
 
@@ -15,6 +16,8 @@ export class HeaderComponent implements OnInit {
   isLoggedIn:boolean;
   phone:any;
   password:any;
+  otp:any;
+  mpin:any;
   agentPhone:any="23059511002";
   loginUrlSubscriber ="http://41.222.103.118:3333/subscriber/queryUserProfileMTML2"
 
@@ -28,6 +31,24 @@ export class HeaderComponent implements OnInit {
   queryUserProfile ="http://41.222.103.118:3333/subscriber/queryUserProfileMTML2"
   registerCustomer ="http://41.222.103.118:3333/dealer/customerRegisterBORequest"
   queryIndividualPackageUrl ="http://41.222.103.118:3333/subscriber/queryIndividualPackage";
+
+
+    getOtPtApi="http://41.222.103.118:3333/otp/setMpin/"
+
+// above api will try to set {mpin} for {msisdn}. if msisdn found in system and its isActive field in db is true, then it will 
+// simply set/update mpin for that msisdn. Else it will insert/update otp by sending OTP to that msisdn.
+
+    verifyOtpApi = "http://41.222.103.118:3333/otp/verifyOtp/"
+
+// above api will verify the {otp} send to {msisdn}. if it was correct and within 5 minutes interval, then it will set isActive field 
+// in db to true.
+
+
+ verifyMPinApi = "http://41.222.103.118:3333/otp/verifyMpin/"
+
+// above api will verify {msisdn-mpin} combination in db and return appropriate, success or incorrect mpin msg.
+ 
+isUserActive = "http://41.222.103.118:3333/otp/checkStatus/"
 
   userType:any = -1;//for dealer 1 for subscriber 2
   userData:any;
@@ -60,6 +81,8 @@ export class HeaderComponent implements OnInit {
    queryUserProfileIMSI:any;
    queryUserProfilePswd:any;
    queryUserProfileData:any;
+
+   activeLoginStep = 1;
 
  
   constructor(private http: HttpClient) { }
@@ -540,6 +563,139 @@ catch (e) {
 return responseStr;
 
 }
+proceedToVerifymPin(){
+if(!this.phone||this.phone.length==0){
+  alert("Phone is required")
+  return
+}
+
+  let that = this;
+  const headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
+  headers.append('Access-Control-Allow-Origin', '*');
+  
+      this.http.get(this.isUserActive+""+this.agentPhone, { headers: headers})
+        .subscribe(data => {
+          let responsedata:any=data;
+          if(responsedata.httpCode=="200"){
+            that.activeLoginStep = 4;
+
+          }else{
+            alert(responsedata.data)
+          }
+
+        },
+        error => {
+          if(error.error.httpCode&&error.error.httpCode=="404"){
+            that.activeLoginStep = 3;
+            that.requestOtp();
+          }else{
+            alert(error)
+
+          }
+    
+        });
+
+}
+requestOtp(){
+  let that = this;
+  const headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
+  headers.append('Access-Control-Allow-Origin', '*');
+  
+      this.http.get(this.getOtPtApi+""+this.phone+"/''", { headers: headers})
+        .subscribe(data => {
+          let reponseData :any= data;
+          if(reponseData.data=="MPIN Set"){
+            that.activeLoginStep = 4;
+
+          }else{
+            alert(reponseData.data)
+          }
+      
+ },
+        error => {
+         alert(error);
+    
+        });
+}
+verifyOtp(){
+  if(!this.otp||this.otp.length==0){
+    alert("OTP is required")
+    return
+  }
+  let that = this;
+
+  const headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
+  headers.append('Access-Control-Allow-Origin', '*');
+  this.http.get(this.verifyOtpApi+""+this.phone+"/"+this.otp, { headers: headers})
+        .subscribe(data => {
+          debugger
+          let reponseData :any= data;
+          if(reponseData.httpCode=="200"){
+            that.activeLoginStep = 4;
+          }else{
+            alert(reponseData.data)
+          }
+
+         
+      
+ },
+        error => {
+         alert(error.error.data);
+    
+        });
+}
+
+setMpin(){
+  if(!this.mpin||this.mpin.length==0){
+    alert("MPIN is required")
+    return
+  }
+  let that = this;
+  const headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
+  headers.append('Access-Control-Allow-Origin', '*');
+  this.http.get(this.getOtPtApi+""+this.phone+"/"+this.mpin, { headers: headers})
+        .subscribe(data => {
+          let reponseData :any= data;
+           alert(reponseData.data);
+           $("#setMpinModal").modal("hide");
+          
+         
+      
+ },
+        error => {
+          debugger
+         alert(error);
+    
+        });
+}
+
+verifyMpin(){
+  const headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
+  headers.append('Access-Control-Allow-Origin', '*');
+  this.http.get(this.verifyMPinApi+""+this.phone+"/"+this.mpin, { headers: headers})
+        .subscribe(data => {
+          let reponseData :any= data;
+          debugger
+          alert(reponseData.data);
+         
+      
+ },
+        error => {
+          debugger
+         alert(error);
+    
+        });
+}
+
+
+openMpinModal(){
+  this.activeLoginStep = 1;
+
+  this.phone="";
+  this.otp="";
+  this.mpin="";
+$("#setMpinModal").modal()
+  }
 
 
 }  
