@@ -4,6 +4,7 @@ import { Constants } from '../core/constants';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { typeWithParameters } from '@angular/compiler/src/render3/util';
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -85,7 +86,7 @@ isUserActive = "http://41.222.103.118:3333/otp/checkStatus/"
    activeLoginStep = 1;
 
  
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private router: Router) { }
 
   ngOnInit() {
     this.isLoggedIn = LocalStorageService.getIsLoggedIn();
@@ -125,6 +126,7 @@ logout(){
   localStorage.removeItem(Constants.userDataKey);
   this.isLoggedIn = LocalStorageService.getIsLoggedIn();
   this.mUserLoggedOut.emit();
+  this.router.navigate(['/login']);
 
 
 }

@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CustomerPageComponent } from './customer-page/customer-page.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -17,6 +17,9 @@ import {AccordionModule} from 'primeng/accordion';
 import { LocateUsComponent } from './locate-us/locate-us.component';
 import { SupportComponent } from './support/support.component';
 import { FaqsComponent } from './faqs/faqs.component';
+import { LoginComponent } from './login/login.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { AuthGuardService } from './core/service/auth-gaurd.service';
 
 
 
@@ -31,7 +34,10 @@ import { FaqsComponent } from './faqs/faqs.component';
     PackagesComponent,
     LocateUsComponent,
     SupportComponent,
-    FaqsComponent
+    FaqsComponent,
+    LoginComponent,
+    RegistrationComponent
+
   ],
   imports: [
     BrowserModule,
@@ -39,9 +45,10 @@ import { FaqsComponent } from './faqs/faqs.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    AccordionModule
+    AccordionModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
