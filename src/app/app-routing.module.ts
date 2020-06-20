@@ -8,13 +8,15 @@ import { PackagesComponent } from './packages/packages.component';
 import { LocateUsComponent } from './locate-us/locate-us.component';
 import { SupportComponent } from './support/support.component';
 import { FaqsComponent } from './faqs/faqs.component';
+import { LoginComponent } from './login/login.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 
 const routes: Routes = [
   {
     path: '',
     component: HomePageComponent,
-    pathMatch:'full'
+     pathMatch:'full'
   },
   {
   path: 'accountDetail',
@@ -45,8 +47,12 @@ const routes: Routes = [
   path: 'faqs',
   component: FaqsComponent,
   pathMatch:'full',
+},
+{
+  path: 'login',
+  component: LoginComponent,
+  pathMatch:'full',
 }
-
 ];
 
 @NgModule({

@@ -11,11 +11,14 @@ export class AuthGuardService  implements CanActivate{
 
   canActivate( route : ActivatedRouteSnapshot, state : RouterStateSnapshot ) {
     if(LocalStorageService.isLoggedIn()) {
+      console.log("Logged In");
       return true;
     }
     else {
-      //this.router.navigate(['/'])
-      return true;
+      console.log("Logged Out");
+
+      this.router.navigate(['/login'])
+      //return true;
     }
 
   }
