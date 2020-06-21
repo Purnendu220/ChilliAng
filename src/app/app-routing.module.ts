@@ -16,37 +16,50 @@ const routes: Routes = [
   {
     path: '',
     component: HomePageComponent,
-     pathMatch:'full'
+     pathMatch:'full',
+     canActivate:[AuthGuardService]
   },
   {
   path: 'accountDetail',
   component: CustomerPageComponent,
   pathMatch:'full',
+  canActivate:[AuthGuardService]
+
 },
 {
   path: 'quickrecharge',
   component: QuickRechargeComponent,
   pathMatch:'full',
+  canActivate:[AuthGuardService]
+
 },
 {
   path: 'packages',
   component: PackagesComponent,
   pathMatch:'full',
+  canActivate:[AuthGuardService]
+
 },
 {
   path: 'locateus',
   component: LocateUsComponent,
   pathMatch:'full',
+  canActivate:[AuthGuardService]
+
 },
 {
   path: 'support',
   component: SupportComponent,
   pathMatch:'full',
+  canActivate:[AuthGuardService]
+
 },
 {
   path: 'faqs',
   component: FaqsComponent,
   pathMatch:'full',
+  canActivate:[AuthGuardService]
+
 },
 {
   path: 'login',
