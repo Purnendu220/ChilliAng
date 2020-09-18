@@ -23,6 +23,8 @@
                         
                         <!-- <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" >About Chili</a></li> -->
                         <li *ngIf="!isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block c_p" [routerLink] = "'/packages'">Packages</a></li>
+                        <li *ngIf="!isLoggedIn" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block c_p" [routerLink] = "'/login'">Login</a></li>
+
                         <li *ngIf="isLoggedIn && userType==1" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#signupModal">register</a></li>
                         <li *ngIf="isLoggedIn && userType==1" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#pinModal">Pin Modification</a></li>
                         <li *ngIf="isLoggedIn && userType==1" class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#dealerModal">Dealer Balance</a></li>
@@ -35,43 +37,100 @@
             </div>
         </div>
     </div>
+
     <!-- navbar -->
-    <div class="navigation w-100" hidden>
+   <div class="navigation w-100" >
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light p-0">
-                <a class="navbar-brand c_p" [routerLink] = "'/'"><img src="assets/images/logo2.png" alt="logo"></a>
-                <button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+              
 
                 <div class="collapse navbar-collapse" id="navigation">
-                    <ul class="navbar-nav ml-auto text-center">
+                    <ul *ngIf="userType==1" class="navbar-nav ml-auto text-center" >
                         <li class="nav-item active">
-                            <a class="nav-link c_p" [routerLink] = "'/packages'">Mobile Plans</a>
+                            <a class="nav-link c_p" >Authentication Dealer</a>
                         </li>
                         <li class="nav-item @@about">
-                            <a class="nav-link c_p" [routerLink] = "'/packages'">Data Plans</a>
+                            <a class="nav-link c_p" data-toggle="modal" data-target="#pinModal">MPIN Modification</a>
                         </li>
                         <li class="nav-item @@courses">
-                            <a class="nav-link c_p" [routerLink] = "'/packages'">Sms Plans</a>
+                            <a class="nav-link c_p" >KYC</a>
                         </li>
-
-                        <li  *ngIf="isLoggedIn && userType==2" class="nav-item @@blog c_p" [routerLink] = "'/quickrecharge'">
-                            <a class="nav-link c_p" >Quick Recharge</a>
+                        <li class="nav-item @@courses">
+                            <a class="nav-link c_p" >Sim activation</a>
                         </li>
-                        <li class="nav-item dropdown view">
+                        <li class="nav-item @@courses">
+                            <a class="nav-link c_p" >Product Sale</a>
+                        </li>
+                        <li class="nav-item @@courses">
+                            <a class="nav-link c_p" data-toggle="modal" data-target="#etopupModal" >E-TOPUP</a>
+                        </li>
+                        <li class="nav-item @@courses">
+                            <a class="nav-link c_p" data-toggle="modal" data-target="#lastTransactionModal" >LAST TRANSACTION</a>
+                        </li>
+                        <li class="nav-item @@courses">
+                            <a class="nav-link c_p"  >Terms & Conditions</a>
+                        </li>
+                        <li class="nav-item @@courses">
+                            <a class="nav-link c_p" [routerLink] = "'/faqs'"  >FAQ</a>
+                        </li>
+                        <li class="nav-item @@courses">
+                            <a class="nav-link c_p" [routerLink] = "'/locateus'"  >Locate us</a>
+                        </li>
+                       
+                        
+                    </ul>
+                    <ul  class="navbar-nav ml-auto text-center">
+                        <li class="nav-item">
+                            <a class="nav-link c_p" (click)="openMpinModal()"  >Authemticate OTP</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link c_p" (click)="openMpinModal()"  >Modify MPIN</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link c_p" [routerLink] = "'/accountDetail'"  >View Profile</a>
+                        </li>
+                        
+                        <li class="nav-item ">
+                            <a class="nav-link c_p" (click)="queryIndividualPackage('6787687')">Bill query</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link c_p" >Request Bill on email</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link c_p" >Recharge</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link c_p" >Transfer balance</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link c_p" (click)="queryIndividualPackage('6787687')">Current Package</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link c_p" [routerLink] = "'/packages'" >CHiLi Packages</a>
+                        </li>
+                      
+                       <li class="nav-item dropdown view">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Products
+                                More
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" [routerLink] = "'/packages'">Data Plans</a>
-                                <a class="dropdown-item" [routerLink] = "'/packages'">Mobile Plans</a>
-                                <a class="dropdown-item" [routerLink] = "'/packages'">SMS Plans</a>
+                                <a class="dropdown-item c_p" >Credit Loan</a>
+                                <a class="dropdown-item c_p" >DND Request</a>
+                                <a class="dropdown-item c_p">Loyalty Points</a>
+                                <a class="dropdown-item c_p" >Links to bank recharge</a>
+                                <a class="dropdown-item c_p" >Customer Care</a>
+                                <a class="dropdown-item c_p"  >Terms & Conditions</a>
+                                <a class="dropdown-item c_p" [routerLink] = "'/faqs'"  >FAQ</a>
+                                <a class="dropdown-item c_p" [routerLink] = "'/locateus'"  >Locate us</a>
+                                <a class="dropdown-item c_p" [routerLink] = "'/support'">Support</a>
+
                             </div>
                         </li>
-                        <li class="nav-item @@contact">
-                            <a class="nav-link" [routerLink] = "'/support'">Support</a>
-                        </li>
+                       
+                     
                     </ul>
                 </div>
             </nav>

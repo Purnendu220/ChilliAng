@@ -16,21 +16,18 @@ const routes: Routes = [
   {
     path: '',
     component: HomePageComponent,
-     pathMatch:'full',
-     canActivate:[AuthGuardService]
+     pathMatch:'full'
+
   },
   {
   path: 'accountDetail',
   component: CustomerPageComponent,
   pathMatch:'full',
-  canActivate:[AuthGuardService]
-
 },
 {
   path: 'quickrecharge',
   component: QuickRechargeComponent,
   pathMatch:'full',
-  canActivate:[AuthGuardService]
 
 },
 {
@@ -44,21 +41,18 @@ const routes: Routes = [
   path: 'locateus',
   component: LocateUsComponent,
   pathMatch:'full',
-  canActivate:[AuthGuardService]
 
 },
 {
   path: 'support',
   component: SupportComponent,
   pathMatch:'full',
-  canActivate:[AuthGuardService]
 
 },
 {
   path: 'faqs',
   component: FaqsComponent,
   pathMatch:'full',
-  canActivate:[AuthGuardService]
 
 },
 {

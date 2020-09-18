@@ -12,7 +12,7 @@ export class RegistrationComponent implements OnInit {
   registrationForm: FormGroup;
   submitted = false;
   returnUrl: string;
-  error: {};
+  error: any;
   loginError: string;
 
   constructor(

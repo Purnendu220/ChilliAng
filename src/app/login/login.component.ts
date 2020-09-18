@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
   returnUrl: string;
-  error: {};
+  error: any;;
   loginError: string;
   userType:any;
 
@@ -79,11 +79,11 @@ isUserActive = "http://41.222.103.118:3333/otp/checkStatus/"
     if (!this.loginForm.valid) {
       return false;
     } else {
-      this.userType = this.loginForm.get('customerType');
+      this.userType = this.loginForm.get('customerType').value;
       if(this.userType == 1){
-        this.loginApi(this.loginForm.get('username'),this.loginForm.get('password'));
+        this.loginApi(this.loginForm.get('username').value,this.loginForm.get('password').value);
       }else{
-        this.loginApiSubscriber(this.loginForm.get('username'),this.loginForm.get('password'));
+        this.loginApiSubscriber(this.loginForm.get('username').value,this.loginForm.get('password').value);
       }    
     }
 

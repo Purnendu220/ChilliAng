@@ -32,9 +32,7 @@ export class HeaderComponent implements OnInit {
   queryUserProfile ="http://41.222.103.118:3333/subscriber/queryUserProfileMTML2"
   registerCustomer ="http://41.222.103.118:3333/dealer/customerRegisterBORequest"
   queryIndividualPackageUrl ="http://41.222.103.118:3333/subscriber/queryIndividualPackage";
-
-
-    getOtPtApi="http://41.222.103.118:3333/otp/setMpin/"
+  getOtPtApi="http://41.222.103.118:3333/otp/setMpin/"
 
 // above api will try to set {mpin} for {msisdn}. if msisdn found in system and its isActive field in db is true, then it will 
 // simply set/update mpin for that msisdn. Else it will insert/update otp by sending OTP to that msisdn.
@@ -49,7 +47,7 @@ export class HeaderComponent implements OnInit {
 
 // above api will verify {msisdn-mpin} combination in db and return appropriate, success or incorrect mpin msg.
  
-isUserActive = "http://41.222.103.118:3333/otp/checkStatus/"
+ isUserActive = "http://41.222.103.118:3333/otp/checkStatus/"
 
   userType:any = -1;//for dealer 1 for subscriber 2
   userData:any;
@@ -99,7 +97,6 @@ isUserActive = "http://41.222.103.118:3333/otp/checkStatus/"
       }
 
     }
-
   }
   selectUserType(type){
     this.userType = type;
